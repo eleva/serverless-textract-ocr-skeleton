@@ -1,0 +1,20 @@
+# Idea IDE
+.idea
+# Node
+/node_modules
+!/src/layer/shared/nodejs/node_modules
+# Serverless directories
+.serverless
+# Dotenv
+.env
+.env.*
+!.env.dist
+!.env.dist.*
+# Doc
+/doc/build
+!/doc/build/.gitkeep
+.redocly.lint-ignore.yaml
+# Tests
+coverage
+__tests__/document/ocr/response.json
+/samples/**

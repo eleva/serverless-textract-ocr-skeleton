@@ -1,0 +1,22 @@
+ocr:
+  handler: src/function/document/ocr/index.handler #function handler
+  package: #package patterns
+    include:
+      - "!**/*"
+      - node_modules/**
+      - src/function/document/ocr/**
+  events: #events
+    #keep warm event
+    - schedule:
+        rate: rate(5 minutes)
+        enabled: ${strToBool(${self:custom.scheduleEnabled.${env:STAGE_NAME}})}
+        input:
+          warmer: true
+    #S3 event
+    - s3:
+        bucket: ocr-documents
+        event: s3:ObjectCreated:*
+        rules:
+          - prefix: input/
+          - suffix: .jpg
+

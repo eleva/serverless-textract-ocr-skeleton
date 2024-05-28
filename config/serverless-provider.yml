@@ -1,0 +1,43 @@
+name: aws
+iam:
+  role:
+    statements:
+      # Allow functions to use s3
+      - Effect: Allow
+        Action:
+          - 's3:ListBucket'
+          - 's3:PutObject'
+          - 's3:DeleteObject'
+        Resource:
+          - 'arn:aws:s3:::ocr-documents/*'
+      # Allow functions to use textract
+      - Effect: Allow
+        Action: 'textract:*'
+        Resource: '*'
+      # Allow functions to use dynamodb
+      - Effect: Allow
+        Action: 'dynamodb:PartiQLInsert'
+        Resource: '*'
+deploymentMethod: direct
+# Block public access on deployment bucket
+deploymentBucket:
+  blockPublicAccess: true
+# The AWS region in which to deploy (us-east-1 is the default)
+region: ${env:AWS_REGION}
+runtime: nodejs20.x
+environment:
+  # environment variables
+  APP_ENV: ${env:APP_ENV}
+## VPC Configuration
+vpc:
+  securityGroupIds:
+    - ${env:SG1}
+  subnetIds:
+    - ${env:SUBNET1}
+    - ${env:SUBNET2}
+    - ${env:SUBNET3}
+# Enable lambda tracing with xray
+tracing:
+  lambda: true
+layers:
+  - !Ref SharedLambdaLayer

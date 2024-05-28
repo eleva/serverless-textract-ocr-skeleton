@@ -1,0 +1,14 @@
+Resources:
+  identityTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: identityTable
+      AttributeDefinitions:
+        - AttributeName: document_number
+          AttributeType: S
+      KeySchema:
+        - AttributeName: document_number
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1

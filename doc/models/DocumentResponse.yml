@@ -1,0 +1,6 @@
+type: object
+description: Document object.
+properties:
+  id:
+    type: integer
+    description: Document unique identifier.

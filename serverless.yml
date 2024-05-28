@@ -1,0 +1,53 @@
+service: sls-textract-ocr
+frameworkVersion: '3'
+
+## Use .env
+useDotenv: true
+
+## Package individually each function
+package:
+  individually: true
+
+## Apply plugins
+#local environment,documentation, monitoring cache, tests
+plugins: ${file(./config/serverless-plugins.yml)}
+## Define shared layers
+layers: ${file(./src/layer/shared/serverless.yml)}
+## Define provider and globals
+provider: ${file(./config/serverless-provider.yml)}
+
+## Create resources with separate CloudFormation templates
+resources:
+  ## DynamoDb Tables
+  - ${file(./config/resources/serverless-dynamo-db.yml)}
+  ## Cognito
+  #- ${file(./config/resources/serverless-cognito-user-pool.yml)}
+  #- ${file(./config/resources/serverless-cognito-identity-pool.yml)}
+  ## WAF
+  #- ${file(./../../config/resources/serverless-waf.yml)}
+
+## Define atomic functions
+functions:
+  ## OCR function
+  - ${file(./src/function/document/ocr/serverless.yml)}
+
+## Define custom vars
+custom:
+  ## Set service name
+  service: ${env:SERVICE_NAME}
+  ## Set stage name
+  stage: ${env:STAGE_NAME}
+  ## Set monitoring dashboard and alarms with slic-watch
+  slicWatch: ${file(./config/serverless-slic-watch.yml)}
+  ## Enable schedulers based on stage
+  scheduleEnabled: ${file(./config/serverless-schedule-enabled.yml)}
+  ## Documentation globals
+  documentation: ${file(./doc/serverless.yml)}
+  ## Gateway caching definitions
+  apiGatewayCaching: ${file(./config/serverless-api-gateway-caching.yml)}
+  ## Prune to reduce old lambda version and layer footprint
+  prune: ${file(./config/serverless-prune.yml)}
+
+
+
+
