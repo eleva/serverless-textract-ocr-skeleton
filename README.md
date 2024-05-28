@@ -1,5 +1,5 @@
 # serverless-textract-ocr-skeleton
-This repo contains a serverless EU-Driving Licences OCR micro-service, based on Amazon Textract as described here.
+This repo contains a serverless EU-Driving Licences OCR micro-service, based on Amazon Textract as described [here](https://dev.to/ddesio/build-a-serverless-eu-driving-licences-ocr-with-amazon-textract-on-aws-5ckm).
 
 ## ⚡ [Setup serverless](https://www.serverless.com)
 To start working locally and deploy this project you'll need to install and configure serverless following those steps:
